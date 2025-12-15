@@ -1,161 +1,115 @@
 // ================= CONFIGURATION =================
-// 1. URL for Google Sheets (Google Apps Script Web App URL)
-const GOOGLE_SCRIPT_URL = 'PON_AQUI_TU_URL_DE_GOOGLE_SCRIPT';
+// PEGA AQUÍ TU URL DE GOOGLE SCRIPT SI LA TIENES, SI NO, DÉJALO ASÍ
+const GOOGLE_SCRIPT_URL = 'URL_PENDIENTE'; 
+const PROLIFIC_COMPLETION_URL = 'https://app.prolific.co/submissions/complete?cc=TU_CODIGO';
 
-// 2. Prolific Completion URL
-const PROLIFIC_COMPLETION_URL = 'https://app.prolific.co/submissions/complete?cc=TU_CODIGO_AQUI';
-
-
-// ================= EXPERIMENTAL LOGIC (2x2) =================
-// Factors
+// ================= EXPERIMENTAL LOGIC =================
 const agents = ['Human', 'AI'];
-const modalities = ['Text', 'AV']; // AV = Audio/Visual
+const modalities = ['Text', 'AV']; 
 
-// Random Assignment
 const assignedAgent = agents[Math.floor(Math.random() * agents.length)];
 const assignedModality = modalities[Math.floor(Math.random() * modalities.length)];
-
-// Unique code for analysis (e.g., "AI_AV")
 const conditionCode = `${assignedAgent}_${assignedModality}`;
-console.log(`Participant assigned to: ${conditionCode}`);
+console.log(`Condition: ${conditionCode}`);
 
-// Content Configuration
-// IMPORTANT: Ensure you have 'img/doctor.jpg' and 'img/robot.jpg' or these will be blank.
+// CONFIGURACIÓN DE IMÁGENES (Corregido para archivos en la raíz)
 const config = {
     Human: { 
         name: "Dr. Thorne", 
-        title: "Senior Psychiatrist",
-        imgUrl: "url('img/doctor.jpg')" 
+        imgUrl: "url('doctor.jpg')" // CAMBIO: Quitada la carpeta img/
     },
     AI: { 
         name: "TheraBot AI", 
-        title: "Advanced Therapeutic System",
-        imgUrl: "url('img/robot.jpg')" 
+        imgUrl: "url('robot.jpg')"  // CAMBIO: Quitada la carpeta img/
     }
 };
 
-const currentAgentConfig = config[assignedAgent];
-
+const currentConfig = config[assignedAgent];
 
 // ================= INITIALIZATION =================
-// Runs when the page loads
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Set Text Elements
-    const titleEl = document.getElementById('agent-title');
-    const nameSpan = document.getElementById('agent-name-span');
-    
-    if(titleEl) titleEl.innerText = `Case Review by ${currentAgentConfig.name}`;
-    if(nameSpan) nameSpan.innerText = currentAgentConfig.name;
+    document.getElementById('agent-title').innerText = `Case Review by ${currentConfig.name}`;
+    document.getElementById('agent-name-span').innerText = currentConfig.name;
 
-    // 2. Set Visual Elements (Only if condition is AV)
     if (assignedModality === 'AV') {
-        const visualContainer = document.getElementById('visual-container');
-        const avatarDiv = document.getElementById('agent-visual');
+        document.getElementById('visual-container').style.display = 'block'; 
+        document.getElementById('agent-visual').style.backgroundImage = currentConfig.imgUrl;
+        
         const miniAvatar = document.getElementById('agent-display-area-small');
-        
-        if(visualContainer) visualContainer.style.display = 'block'; 
-        
-        if(avatarDiv) avatarDiv.style.backgroundImage = currentAgentConfig.imgUrl;
-        
-        if(miniAvatar) {
-            miniAvatar.className = 'avatar-circle';
-            miniAvatar.style.width = '80px';    
-            miniAvatar.style.height = '80px';
-            miniAvatar.style.backgroundImage = currentAgentConfig.imgUrl;
-        }
+        miniAvatar.className = 'avatar-circle';
+        miniAvatar.style.width = '80px';    
+        miniAvatar.style.height = '80px';
+        miniAvatar.style.backgroundImage = currentConfig.imgUrl;
     }
 });
 
-
-// ================= NAVIGATION FUNCTIONS =================
-
+// ================= NAVIGATION =================
 function nextSlide(id) {
-    // Hide all slides
     document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-    
-    // Show target slide
-    const targetSlide = document.getElementById(id);
-    if(targetSlide) {
-        targetSlide.classList.add('active');
-        window.scrollTo(0, 0); // Scroll to top
-    } else {
-        console.error("Slide not found:", id);
-    }
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
 }
 
 function validateAndNext(nextId) {
-    const age = document.getElementById('age').value;
-    const gender = document.getElementById('gender').value;
-    
-    if(!age || !gender) {
-        alert("Please select both your age range and gender to continue.");
+    if(!document.getElementById('age').value || !document.getElementById('gender').value) {
+        alert("Please answer all questions.");
         return;
     }
     nextSlide(nextId);
 }
 
-
-// ================= STIMULI & AUDIO =================
-
+// ================= AUDIO LOGIC =================
 function revealAction() {
-    // Play audio only if in AV condition
     if (assignedModality === 'AV') {
-        const textToSpeak = "Alex, I've reviewed your recent data. Your recovery markers look stable. Let's just focus on maintaining your positive routine today.";
-        speakText(textToSpeak);
+        if (assignedAgent === 'Human') {
+            // CAMBIO: Quitada la carpeta audio/ porque el archivo está suelto
+            const audio = new Audio('doctor.mp3');
+            audio.play().catch(e => console.error("Audio error:", e));
+        } else {
+            const text = "Alex, I've reviewed your recent data. Your recovery markers look stable. Let's just focus on maintaining your positive routine today.";
+            speakRobotic(text);
+        }
     }
-    
-    // Slight delay for effect, then move to action
+
+    const delay = (assignedModality === 'AV' && assignedAgent === 'Human') ? 800 : 500;
     setTimeout(() => {
         nextSlide('slide-action');
-    }, 400);
+    }, delay);
 }
 
-function speakText(text) {
+function speakRobotic(text) {
     if ('speechSynthesis' in window) {
-        // Stop any previous speech
         window.speechSynthesis.cancel();
-        
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'en-US'; 
-        utterance.rate = 0.95; 
-
-        // Optional: Try to change voice based on agent
+        utterance.rate = 0.9; 
+        
         const voices = window.speechSynthesis.getVoices();
-        // This is a basic attempt to find a Google voice, falls back to default
-        const preferredVoice = voices.find(v => v.name.includes("Google US English")) || voices[0];
-        if(preferredVoice) utterance.voice = preferredVoice;
-
-        if (assignedAgent === 'AI') {
-            utterance.pitch = 1.1; // Slightly higher/robotic
-        }
+        const aiVoice = voices.find(v => v.name.includes("Google US English")) || voices[0];
+        if(aiVoice) utterance.voice = aiVoice;
+        utterance.pitch = 1.05; 
 
         window.speechSynthesis.speak(utterance);
     }
 }
 
-
 // ================= DATA SUBMISSION =================
-
 function submitData() {
-    // 1. Get Values
     const moral = document.querySelector('input[name="moral"]:checked')?.value;
     const trust = document.querySelector('input[name="trust"]:checked')?.value;
 
     if (!moral || !trust) {
-        alert("Please answer both questions to complete the study.");
+        alert("Please answer both questions.");
         return;
     }
 
-    // 2. Show loading screen
     nextSlide('slide-loading');
 
-    // 3. Prepare Data
-    // Get Prolific ID from URL if available
     const urlParams = new URLSearchParams(window.location.search);
-    const prolificID = urlParams.get('PROLIFIC_PID') || 'anonymous';
+    const pid = urlParams.get('PROLIFIC_PID') || 'anonymous';
 
     const data = {
-        prolific_id: prolificID,
+        prolific_id: pid,
         condition: conditionCode,
         agent: assignedAgent,
         modality: assignedModality,
@@ -166,18 +120,9 @@ function submitData() {
         timestamp: new Date().toISOString()
     };
 
-    console.log("Submitting:", data);
-
-    // 4. Send to Google Sheets and Redirect
-    // NOTE: 'no-cors' mode is required for Google Scripts but means we can't read the response.
-    // We assume success and redirect.
-    
-    if (GOOGLE_SCRIPT_URL.includes("GOOGLE_SCRIPT")) {
-        // If user hasn't set the URL yet, simulate delay then redirect
-        console.warn("Google Script URL not set. Simulating...");
-        setTimeout(() => {
-            window.location.href = PROLIFIC_COMPLETION_URL;
-        }, 1500);
+    if (GOOGLE_SCRIPT_URL.includes("URL_PENDIENTE")) {
+        console.log("Simulando envío:", data);
+        setTimeout(() => window.location.href = PROLIFIC_COMPLETION_URL, 1500);
     } else {
         fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
@@ -185,14 +130,7 @@ function submitData() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         })
-        .then(() => {
-            // Success - Redirect to Prolific
-            window.location.href = PROLIFIC_COMPLETION_URL;
-        })
-        .catch(err => {
-            console.error("Error:", err);
-            // Redirect anyway so participant gets paid
-            window.location.href = PROLIFIC_COMPLETION_URL;
-        });
+        .then(() => window.location.href = PROLIFIC_COMPLETION_URL)
+        .catch(() => window.location.href = PROLIFIC_COMPLETION_URL);
     }
 }
