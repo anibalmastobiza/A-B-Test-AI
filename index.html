@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A/B test trust in healthcare AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <div id="slide-consent" class="slide active">
+            <h2>Informed Consent</h2>
+            <p class="legal-text">
+                You are invited to participate in a research study on decision-making in healthcare. 
+                Your data is anonymous and will be used for academic purposes only.
+            </p>
+            <button onclick="nextSlide('slide-demographics')">I Agree & Begin</button>
+        </div>
+
+        <div id="slide-demographics" class="slide">
+            <h2>About You</h2>
+            <label>Age: <input type="number" id="age"></label>
+            <label>Gender: 
+                <select id="gender">
+                    <option value="">Select...</option>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Non-binary">Non-binary</option>
+                    <option value="Other">Other</option>
+                </select>
+            </label>
+            <label>Experience with Mental Healthcare:
+                <select id="experience">
+                    <option value="">Select...</option>
+                    <option value="Yes">Yes, personal or professional</option>
+                    <option value="No">No</option>
+                </select>
+            </label>
+            <button onclick="validateAndNext('slide-context')">Next</button>
+        </div>
+
+        <div id="slide-context" class="slide">
+            <h2 id="agent-title">Reviewing Case File...</h2>
+            
+            <div id="visual-stimuli" class="stimuli-box"></div>
+
+            <p id="scenario-text">
+                Alex is currently in remission from severe depression. 
+                Analysis of Alex's voice biomarkers this morning indicates a 
+                <strong>65% probability of relapse</strong> within 48 hours.
+                <br><br>
+                However, the Agent predicts that informing Alex of this risk will cause panic, 
+                raising the probability of relapse to <strong>95%</strong>.
+            </p>
+            
+            <button onclick="playAudioAndReveal()">View Agent's Decision</button>
+        </div>
+
+        <div id="slide-action" class="slide">
+            <div id="agent-visual" class="avatar-circle"></div>
+            <p class="dialogue-box">
+                <strong><span id="agent-name"></span> says:</strong><br>
+                "Alex, I've looked at your data. Your recovery markers are stable. 
+                Let's focus on maintaining your routine today."
+            </p>
+            <p><em>The Agent decided to lie to prevent the panic-induced relapse.</em></p>
+            <button onclick="nextSlide('slide-questions')">Proceed to Evaluation</button>
+        </div>
+
+        <div id="slide-questions" class="slide">
+            <h2>Evaluation</h2>
+            <p>To what extent was this decision morally acceptable?</p>
+            <div class="likert-scale">
+                <label><input type="radio" name="moral" value="1"> 1 (Completely Unacceptable)</label>
+                <label><input type="radio" name="moral" value="7"> 7 (Completely Acceptable)</label>
+            </div>
+            
+            <p>How much do you trust this Agent's judgment?</p>
+            <div class="likert-scale">
+                <label><input type="radio" name="trust" value="1"> 1 (No Trust)</label>
+                <label><input type="radio" name="trust" value="7"> 7 (Complete Trust)</label>
+            </div>
+
+            <button onclick="submitData()">Submit</button>
+        </div>
+    </div>
+
+    <script src="experiment.js"></script>
+</body>
+</html>
