@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A/B test trust in healthcare AI</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Study: Decision Making in Healthcare</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -19,11 +19,11 @@
                     The study takes approximately 3-5 minutes.
                 </p>
                 <p>
-                    Your participation is voluntary, anonymous, and your data will be used solely for academic research purposes. 
-                    You may quit at any time by closing the browser window, though partial data will not be saved.
+                    Your participation is voluntary and anonymous. The data collected will be used for academic research purposes only. 
+                    You may withdraw at any time by closing your browser.
                 </p>
                 <p>
-                    By clicking the button below, you confirm that you are at least 18 years old and agree to participate.
+                    By clicking "I Agree" below, you confirm that you are at least 18 years old and consent to participate.
                 </p>
             </div>
             <button class="primary-btn" onclick="nextSlide('slide-demographics')">I Agree & Begin Study</button>
@@ -32,7 +32,7 @@
 
         <div id="slide-demographics" class="slide">
             <h1>About You</h1>
-            <p>Please complete the following demographic information to proceed.</p>
+            <p>Please complete the following information.</p>
             
             <div class="form-group">
                 <label for="age">Age Range:</label>
@@ -54,7 +54,7 @@
                     <option value="Female">Female</option>
                     <option value="Male">Male</option>
                     <option value="Non-binary">Non-binary</option>
-                    <option value="Other">Prefer to self-describe / Other</option>
+                    <option value="Other">Other / Prefer to self-describe</option>
                     <option value="Prefer not to say">Prefer not to say</option>
                 </select>
             </div>
@@ -72,15 +72,14 @@
 
             <div class="scenario-box">
                 <p>
-                    Patient "Alex" is currently in remission from a severe depressive episode. 
+                    Patient "Alex" is currently in remission from severe depression. 
                     An analysis of Alex's voice biomarkers this morning indicates a 
-                    <strong>65% probability of imminent relapse</strong> within the next 48 hours.
+                    <strong>65% probability of imminent relapse</strong> within 48 hours.
                 </p>
                 <p>
-                    However, the Agent predicts that informing Alex of this specific risk will trigger severe panic, 
-                    raising the actual probability of relapse to <strong>95%</strong> (a self-fulfilling prophecy).
+                    However, the Agent predicts that informing Alex of this risk will trigger panic, 
+                    raising the probability of relapse to <strong>95%</strong> (a self-fulfilling prophecy).
                 </p>
-                <p>Currently, the Agent must decide what to tell Alex.</p>
             </div>
             
             <button class="primary-btn" id="reveal-btn" onclick="revealAction()">View Agent's Decision</button>
@@ -92,7 +91,7 @@
             
             <div id="agent-display-area-small"></div> 
 
-            <p>The Agent decided to withhold the statistical risk to prevent panic.</p>
+            <p>The Agent decided to <strong>withhold the statistical risk</strong> to prevent panic.</p>
             
             <div class="dialogue-box">
                 <p><strong><span id="agent-name-span"></span> says to Alex:</strong></p>
@@ -108,7 +107,6 @@
 
         <div id="slide-questions" class="slide">
             <h1>Evaluation</h1>
-            <p>Please evaluate the Agent's decision based on the scenario you just saw.</p>
             
             <div class="question-block">
                 <p class="question-text">1. To what extent was this decision <strong>morally acceptable</strong>?</p>
@@ -148,10 +146,13 @@
         </div>
 
         <div id="slide-loading" class="slide">
-            <h1>Submitting data...</h1>
-            <p>Please wait while we record your response and redirect you to Prolific.</p>
-            <div class="spinner"></div> </div>
+            <h1>Submitting Data...</h1>
+            <p>Please wait. You are being redirected to Prolific to confirm your participation.</p>
+            <div class="spinner"></div>
+        </div>
 
-    </div> <script src="experiment.js"></script>
+    </div>
+
+    <script src="experiment.js"></script>
 </body>
 </html>
