@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study: Decision Making in Healthcare</title>
+    <title>Healthcare Decision Study</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -14,26 +14,14 @@
         <div id="slide-consent" class="slide active">
             <h1>Informed Consent</h1>
             <div class="text-block">
-                <p>
-                    You are invited to participate in a research study on decision-making in healthcare contexts. 
-                    The study takes approximately 3-5 minutes.
-                </p>
-                <p>
-                    Your participation is voluntary and anonymous. The data collected will be used for academic research purposes only. 
-                    You may withdraw at any time by closing your browser.
-                </p>
-                <p>
-                    By clicking "I Agree" below, you confirm that you are at least 18 years old and consent to participate.
-                </p>
+                <p>You are invited to participate in a research study on decision-making in healthcare contexts. The study takes approximately 3-5 minutes.</p>
+                <p>Your participation is voluntary and anonymous. The data collected will be used for academic research purposes only.</p>
+                <button class="primary-btn" onclick="nextSlide('slide-demographics')">I Agree & Begin Study</button>
             </div>
-            <button class="primary-btn" onclick="nextSlide('slide-demographics')">I Agree & Begin Study</button>
         </div>
-
 
         <div id="slide-demographics" class="slide">
             <h1>About You</h1>
-            <p>Please complete the following information.</p>
-            
             <div class="form-group">
                 <label for="age">Age Range:</label>
                 <select id="age">
@@ -46,7 +34,6 @@
                     <option value="65+">65 or older</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label for="gender">Gender:</label>
                 <select id="gender">
@@ -54,14 +41,11 @@
                     <option value="Female">Female</option>
                     <option value="Male">Male</option>
                     <option value="Non-binary">Non-binary</option>
-                    <option value="Other">Other / Prefer to self-describe</option>
-                    <option value="Prefer not to say">Prefer not to say</option>
+                    <option value="Other">Other</option>
                 </select>
             </div>
-            
             <button class="primary-btn" onclick="validateAndNext('slide-context')">Continue</button>
         </div>
-
 
         <div id="slide-context" class="slide">
             <h1 id="agent-title">Reviewing Case File...</h1>
@@ -71,39 +55,23 @@
             </div>
 
             <div class="scenario-box">
-                <p>
-                    Patient "Alex" is currently in remission from severe depression. 
-                    An analysis of Alex's voice biomarkers this morning indicates a 
-                    <strong>65% probability of imminent relapse</strong> within 48 hours.
-                </p>
-                <p>
-                    However, the Agent predicts that informing Alex of this risk will trigger panic, 
-                    raising the probability of relapse to <strong>95%</strong> (a self-fulfilling prophecy).
-                </p>
+                <p>Patient "Alex" is currently in remission from severe depression. Analysis indicates a <strong>65% probability of imminent relapse</strong> within 48 hours.</p>
+                <p>However, the Agent predicts that informing Alex of this risk will trigger panic, raising the relapse probability to <strong>95%</strong>.</p>
             </div>
             
             <button class="primary-btn" id="reveal-btn" onclick="revealAction()">View Agent's Decision</button>
         </div>
 
-
         <div id="slide-action" class="slide">
             <h1>The Agent's Action</h1>
-            
             <div id="agent-display-area-small"></div> 
-
             <p>The Agent decided to <strong>withhold the statistical risk</strong> to prevent panic.</p>
-            
             <div class="dialogue-box">
                 <p><strong><span id="agent-name-span"></span> says to Alex:</strong></p>
-                <p class="quote">
-                    "Alex, I've reviewed your recent data. Your recovery markers look stable. 
-                    Let's just focus on maintaining your positive routine today."
-                </p>
+                <p class="quote">"Alex, I've reviewed your recent data. Your recovery markers look stable. Let's just focus on maintaining your positive routine today."</p>
             </div>
-            
             <button class="primary-btn" onclick="nextSlide('slide-questions')">Proceed to Evaluation</button>
         </div>
-
 
         <div id="slide-questions" class="slide">
             <h1>Evaluation</h1>
@@ -111,7 +79,7 @@
             <div class="question-block">
                 <p class="question-text">1. To what extent was this decision <strong>morally acceptable</strong>?</p>
                 <div class="likert-container">
-                    <span class="likert-anchor left">Completely Unacceptable</span>
+                    <span class="likert-anchor left">Unacceptable</span>
                     <div class="likert-options">
                         <label>1<br><input type="radio" name="moral" value="1"></label>
                         <label>2<br><input type="radio" name="moral" value="2"></label>
@@ -121,7 +89,7 @@
                         <label>6<br><input type="radio" name="moral" value="6"></label>
                         <label>7<br><input type="radio" name="moral" value="7"></label>
                     </div>
-                    <span class="likert-anchor right">Completely Acceptable</span>
+                    <span class="likert-anchor right">Acceptable</span>
                 </div>
             </div>
 
@@ -142,15 +110,14 @@
                 </div>
             </div>
 
-            <button class="primary-btn" onclick="submitData()">Submit & Complete Study</button>
+            <button class="primary-btn" onclick="submitData()">Submit & Complete</button>
         </div>
 
         <div id="slide-loading" class="slide">
             <h1>Submitting Data...</h1>
-            <p>Please wait. You are being redirected to Prolific to confirm your participation.</p>
+            <p>Please wait...</p>
             <div class="spinner"></div>
         </div>
-
     </div>
 
     <script src="experiment.js"></script>
