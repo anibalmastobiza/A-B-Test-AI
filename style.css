@@ -1,0 +1,62 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+}
+
+.slide { display: none; }
+.slide.active { display: block; animation: fadeIn 0.5s; }
+
+button {
+    background-color: #4CAF50; /* Green typical of clear proceed actions */
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover { background-color: #45a049; }
+
+input, select {
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 80%;
+}
+
+.stimuli-box {
+    background: #eef;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.avatar-circle {
+    width: 100px;
+    height: 100px;
+    background-color: #ddd;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    background-size: cover;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
