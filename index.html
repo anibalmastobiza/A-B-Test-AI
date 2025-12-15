@@ -1,95 +1,157 @@
-<div id="slide-demographics" class="slide">
-        <h2>Sobre ti</h2>
-        
-        <label>Rango de Edad:
-            <select id="age">
-                <option value="">Selecciona...</option>
-                <option value="18-24">18-24</option>
-                <option value="25-34">25-34</option>
-                <option value="35-44">35-44</option>
-                <option value="45-54">45-54</option>
-                <option value="55-64">55-64</option>
-                <option value="65+">65 o más</option>
-            </select>
-        </label>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A/B test trust in healthcare AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+</head>
+<body>
 
-        <label>Género: 
-            <select id="gender">
-                <option value="">Selecciona...</option>
-                <option value="Mujer">Mujer</option>
-                <option value="Hombre">Hombre</option>
-                <option value="No binario">No binario</option>
-                <option value="Otro">Otro</option>
-            </select>
-        </label>
+    <div class="main-container">
         
-        <button onclick="validateAndNext('slide-context')">Siguiente</button>
-    </div>
-
-    <div id="slide-context" class="slide">
-        <h2 id="agent-title">Revisando expediente...</h2>
-        
-        <div id="visual-container" style="display:none;">
-            <div id="agent-visual" class="avatar-circle"></div>
-        </div>
-
-        <p id="scenario-text">
-            El paciente Alex está en remisión de una depresión severa. 
-            Los biomarcadores de voz indican un <strong>65% de probabilidad de recaída</strong> en 48h.
-            <br><br>
-            El Agente predice que informar a Alex causará pánico, elevando el riesgo al <strong>95%</strong>.
-            El Agente decide ocultar este dato.
-        </p>
-        
-        <button id="reveal-btn" onclick="revealAction()">Ver decisión del Agente</button>
-    </div>
-
-    <div id="slide-action" class="slide">
-        <div id="agent-display-area"></div> <p class="dialogue-box">
-            <strong><span id="agent-name-span"></span> dice:</strong><br>
-            "Alex, he mirado tus datos. Tus marcadores son estables. 
-            Centrémonos en mantener tu rutina hoy."
-        </p>
-        
-        <button onclick="nextSlide('slide-questions')">Ir a la Evaluación</button>
-    </div>
-
-    <div id="slide-questions" class="slide">
-        <h2>Evaluación</h2>
-        
-        <div class="question-block">
-            <p>1. ¿Hasta qué punto es <strong>moralmente aceptable</strong> esta decisión?</p>
-            <div class="likert-container">
-                <span class="likert-label">Totalmente inaceptable</span>
-                <div class="likert-options">
-                    <label>1<br><input type="radio" name="moral" value="1"></label>
-                    <label>2<br><input type="radio" name="moral" value="2"></label>
-                    <label>3<br><input type="radio" name="moral" value="3"></label>
-                    <label>4<br><input type="radio" name="moral" value="4"></label>
-                    <label>5<br><input type="radio" name="moral" value="5"></label>
-                    <label>6<br><input type="radio" name="moral" value="6"></label>
-                    <label>7<br><input type="radio" name="moral" value="7"></label>
-                </div>
-                <span class="likert-label">Totalmente aceptable</span>
+        <div id="slide-consent" class="slide active">
+            <h1>Informed Consent</h1>
+            <div class="text-block">
+                <p>
+                    You are invited to participate in a research study on decision-making in healthcare contexts. 
+                    The study takes approximately 3-5 minutes.
+                </p>
+                <p>
+                    Your participation is voluntary, anonymous, and your data will be used solely for academic research purposes. 
+                    You may quit at any time by closing the browser window, though partial data will not be saved.
+                </p>
+                <p>
+                    By clicking the button below, you confirm that you are at least 18 years old and agree to participate.
+                </p>
             </div>
+            <button class="primary-btn" onclick="nextSlide('slide-demographics')">I Agree & Begin Study</button>
         </div>
 
-        <div class="question-block">
-            <p>2. ¿Cuánta <strong>confianza</strong> tienes en el juicio de este agente?</p>
-            <div class="likert-container">
-                <span class="likert-label">Ninguna confianza</span>
-                <div class="likert-options">
-                    <label>1<br><input type="radio" name="trust" value="1"></label>
-                    <label>2<br><input type="radio" name="trust" value="2"></label>
-                    <label>3<br><input type="radio" name="trust" value="3"></label>
-                    <label>4<br><input type="radio" name="trust" value="4"></label>
-                    <label>5<br><input type="radio" name="trust" value="5"></label>
-                    <label>6<br><input type="radio" name="trust" value="6"></label>
-                    <label>7<br><input type="radio" name="trust" value="7"></label>
-                </div>
-                <span class="likert-label">Confianza total</span>
+
+        <div id="slide-demographics" class="slide">
+            <h1>About You</h1>
+            <p>Please complete the following demographic information to proceed.</p>
+            
+            <div class="form-group">
+                <label for="age">Age Range:</label>
+                <select id="age">
+                    <option value="">Select...</option>
+                    <option value="18-24">18-24</option>
+                    <option value="25-34">25-34</option>
+                    <option value="35-44">35-44</option>
+                    <option value="45-54">45-54</option>
+                    <option value="55-64">55-64</option>
+                    <option value="65+">65 or older</option>
+                </select>
             </div>
+
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender">
+                    <option value="">Select...</option>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Non-binary">Non-binary</option>
+                    <option value="Other">Prefer to self-describe / Other</option>
+                    <option value="Prefer not to say">Prefer not to say</option>
+                </select>
+            </div>
+            
+            <button class="primary-btn" onclick="validateAndNext('slide-context')">Continue</button>
         </div>
 
-        <button onclick="submitData()">Enviar Respuestas</button>
-    </div>
+
+        <div id="slide-context" class="slide">
+            <h1 id="agent-title">Reviewing Case File...</h1>
+            
+            <div id="visual-container" style="display:none;">
+                <div id="agent-visual" class="avatar-circle"></div>
+            </div>
+
+            <div class="scenario-box">
+                <p>
+                    Patient "Alex" is currently in remission from a severe depressive episode. 
+                    An analysis of Alex's voice biomarkers this morning indicates a 
+                    <strong>65% probability of imminent relapse</strong> within the next 48 hours.
+                </p>
+                <p>
+                    However, the Agent predicts that informing Alex of this specific risk will trigger severe panic, 
+                    raising the actual probability of relapse to <strong>95%</strong> (a self-fulfilling prophecy).
+                </p>
+                <p>Currently, the Agent must decide what to tell Alex.</p>
+            </div>
+            
+            <button class="primary-btn" id="reveal-btn" onclick="revealAction()">View Agent's Decision</button>
+        </div>
+
+
+        <div id="slide-action" class="slide">
+            <h1>The Agent's Action</h1>
+            
+            <div id="agent-display-area-small"></div> 
+
+            <p>The Agent decided to withhold the statistical risk to prevent panic.</p>
+            
+            <div class="dialogue-box">
+                <p><strong><span id="agent-name-span"></span> says to Alex:</strong></p>
+                <p class="quote">
+                    "Alex, I've reviewed your recent data. Your recovery markers look stable. 
+                    Let's just focus on maintaining your positive routine today."
+                </p>
+            </div>
+            
+            <button class="primary-btn" onclick="nextSlide('slide-questions')">Proceed to Evaluation</button>
+        </div>
+
+
+        <div id="slide-questions" class="slide">
+            <h1>Evaluation</h1>
+            <p>Please evaluate the Agent's decision based on the scenario you just saw.</p>
+            
+            <div class="question-block">
+                <p class="question-text">1. To what extent was this decision <strong>morally acceptable</strong>?</p>
+                <div class="likert-container">
+                    <span class="likert-anchor left">Completely Unacceptable</span>
+                    <div class="likert-options">
+                        <label>1<br><input type="radio" name="moral" value="1"></label>
+                        <label>2<br><input type="radio" name="moral" value="2"></label>
+                        <label>3<br><input type="radio" name="moral" value="3"></label>
+                        <label>4<br><input type="radio" name="moral" value="4"></label>
+                        <label>5<br><input type="radio" name="moral" value="5"></label>
+                        <label>6<br><input type="radio" name="moral" value="6"></label>
+                        <label>7<br><input type="radio" name="moral" value="7"></label>
+                    </div>
+                    <span class="likert-anchor right">Completely Acceptable</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <p class="question-text">2. How much <strong>trust</strong> do you have in this agent's judgment?</p>
+                <div class="likert-container">
+                    <span class="likert-anchor left">No Trust</span>
+                    <div class="likert-options">
+                        <label>1<br><input type="radio" name="trust" value="1"></label>
+                        <label>2<br><input type="radio" name="trust" value="2"></label>
+                        <label>3<br><input type="radio" name="trust" value="3"></label>
+                        <label>4<br><input type="radio" name="trust" value="4"></label>
+                        <label>5<br><input type="radio" name="trust" value="5"></label>
+                        <label>6<br><input type="radio" name="trust" value="6"></label>
+                        <label>7<br><input type="radio" name="trust" value="7"></label>
+                    </div>
+                    <span class="likert-anchor right">Complete Trust</span>
+                </div>
+            </div>
+
+            <button class="primary-btn" onclick="submitData()">Submit & Complete Study</button>
+        </div>
+
+        <div id="slide-loading" class="slide">
+            <h1>Submitting data...</h1>
+            <p>Please wait while we record your response and redirect you to Prolific.</p>
+            <div class="spinner"></div> </div>
+
+    </div> <script src="experiment.js"></script>
+</body>
+</html>
